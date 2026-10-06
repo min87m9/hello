@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unipar | Educación para todos</title>
+  <title>Escuela Comunitaria Semillas | Educación para todos</title>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -560,16 +560,125 @@
       color: var(--verde);
     }
 
-    /* ============ GALERÍA ============ */
+    /* ============ GALERÍA POR CATEGORÍAS ============ */
     .gallery {
       background: var(--blanco);
     }
 
-    .gallery-grid {
+    /* Tabs de categorías */
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .category-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: 2px solid rgba(45, 106, 79, 0.15);
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gris);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .category-tab:hover {
+      border-color: var(--verde);
+      color: var(--verde);
+      transform: translateY(-2px);
+    }
+
+    .category-tab.active {
+      background: var(--verde);
+      color: var(--crema);
+      border-color: var(--verde);
+      box-shadow: 0 8px 20px rgba(45, 106, 79, 0.25);
+    }
+
+    .category-tab .tab-count {
+      background: rgba(255, 255, 255, 0.25);
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+    }
+
+    .category-tab:not(.active) .tab-count {
+      background: rgba(45, 106, 79, 0.1);
+      color: var(--verde);
+    }
+
+    /* Sección de categoría */
+    .category-section {
+      display: none;
+      animation: fadeInCategory 0.5s ease;
+    }
+
+    .category-section.active {
+      display: block;
+    }
+
+    @keyframes fadeInCategory {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .category-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid rgba(45, 106, 79, 0.1);
+    }
+
+    .category-heading-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .category-heading h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .category-heading p {
+      font-size: 0.9rem;
+      color: var(--gris);
+      margin-top: 0.15rem;
+    }
+
+    .cat-actividades .category-heading-icon { background: var(--verde-suave); color: var(--verde); }
+    .cat-talleres .category-heading-icon { background: #fef3c7; color: var(--tierra); }
+    .cat-celebraciones .category-heading-icon { background: #fce7f3; color: #db2777; }
+
+    /* Grid de la galería (3 columnas por categoría) */
+    .category-gallery {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, 220px);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
+      margin-bottom: 3rem;
     }
 
     .gallery-item {
@@ -578,6 +687,7 @@
       position: relative;
       cursor: pointer;
       background: var(--verde-suave);
+      aspect-ratio: 4/3;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
@@ -602,7 +712,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(27, 27, 27, 0.7), transparent 60%);
+      background: linear-gradient(to top, rgba(27, 27, 27, 0.75), transparent 55%);
       opacity: 0;
       transition: opacity 0.4s ease;
     }
@@ -623,7 +733,7 @@
       opacity: 0;
       transform: translateY(10px);
       transition: all 0.4s ease;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
     .gallery-item:hover .gallery-caption {
@@ -652,15 +762,6 @@
     .gallery-item:hover .gallery-zoom-icon {
       opacity: 1;
       transform: scale(1);
-    }
-
-    .gallery-item.large {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-
-    .gallery-item.wide {
-      grid-column: span 2;
     }
 
     /* ============ TESTIMONIOS ============ */
@@ -914,7 +1015,7 @@
     .lightbox {
       position: fixed;
       inset: 0;
-      background: rgba(10, 15, 12, 0.95);
+      background: rgba(10, 15, 12, 0.96);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       z-index: 2000;
@@ -936,7 +1037,7 @@
       position: relative;
       max-width: 1000px;
       width: 100%;
-      max-height: 85vh;
+      max-height: 90vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -951,38 +1052,73 @@
     .lightbox-image-wrapper {
       position: relative;
       width: 100%;
-      max-height: 75vh;
+      max-height: 72vh;
       border-radius: 1.25rem;
       overflow: hidden;
       box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
       background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .lightbox-image-wrapper img {
-      width: 100%;
+      width: auto;
+      max-width: 100%;
       height: auto;
-      max-height: 75vh;
+      max-height: 72vh;
       object-fit: contain;
       display: block;
       transition: opacity 0.3s ease;
     }
 
-    .lightbox-caption {
+    .lightbox-info {
       margin-top: 1.25rem;
-      color: var(--crema);
-      font-size: 1rem;
-      font-weight: 500;
       text-align: center;
+      max-width: 600px;
+    }
+
+    .lightbox-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .lightbox-category.cat-actividades {
+      background: rgba(82, 183, 136, 0.2);
+      color: var(--verde-claro);
+    }
+
+    .lightbox-category.cat-talleres {
+      background: rgba(233, 196, 106, 0.2);
+      color: var(--tierra-claro);
+    }
+
+    .lightbox-category.cat-celebraciones {
+      background: rgba(219, 39, 119, 0.2);
+      color: #f9a8d4;
+    }
+
+    .lightbox-caption {
+      color: var(--crema);
+      font-size: 1.05rem;
+      font-weight: 500;
       font-family: 'Fraunces', serif;
       letter-spacing: -0.01em;
       opacity: 0.95;
+      margin-bottom: 0.35rem;
     }
 
     .lightbox-counter {
-      margin-top: 0.35rem;
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.8rem;
-      font-family: 'Inter', sans-serif;
     }
 
     .lightbox-close {
@@ -1039,6 +1175,34 @@
 
     .lightbox-next {
       right: 1.5rem;
+    }
+
+    /* Indicador de progreso */
+    .lightbox-progress {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+
+    .lightbox-progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+    }
+
+    .lightbox-progress-dot.active {
+      background: var(--verde-claro);
+      width: 24px;
+      border-radius: 999px;
     }
 
     .lightbox-loading {
@@ -1128,18 +1292,8 @@
         display: block;
       }
 
-      .gallery-grid {
+      .category-gallery {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(4, 180px);
-      }
-
-      .gallery-item.large {
-        grid-column: span 2;
-        grid-row: span 2;
-      }
-
-      .gallery-item.wide {
-        grid-column: span 2;
       }
 
       .hero {
@@ -1155,6 +1309,10 @@
         right: 0.75rem;
         width: 40px;
         height: 40px;
+      }
+
+      .lightbox-progress {
+        bottom: 0.75rem;
       }
     }
 
@@ -1184,6 +1342,15 @@
 
       .hero-badge-text strong {
         font-size: 1rem;
+      }
+
+      .category-gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .category-tab {
+        padding: 0.6rem 1.1rem;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -1328,17 +1495,34 @@
     </div>
   </section>
 
-  <!-- ============ GALERÍA ============ -->
+  <!-- ============ GALERÍA POR CATEGORÍAS ============ -->
   <section class="gallery" id="galeria">
     <div class="section-container">
       <div class="section-header reveal">
         <span class="section-label">Galería</span>
         <h2>Momentos de nuestra comunidad</h2>
-        <p>Un recorrido visual por las actividades, talleres y celebraciones que nos unen.</p>
+        <p>Explora por categorías: actividades, talleres y celebraciones que dan vida a nuestra escuela.</p>
       </div>
 
-      <div class="gallery-grid" id="galleryGrid">
-        <!-- Los items se generan dinámicamente con JS para el lightbox -->
+      <!-- Tabs de categorías -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="category-tab active" data-category="actividades">
+          <i class="fas fa-users"></i> Actividades
+          <span class="tab-count" id="count-actividades">0</span>
+        </button>
+        <button class="category-tab" data-category="talleres">
+          <i class="fas fa-palette"></i> Talleres
+          <span class="tab-count" id="count-talleres">0</span>
+        </button>
+        <button class="category-tab" data-category="celebraciones">
+          <i class="fas fa-gift"></i> Celebraciones
+          <span class="tab-count" id="count-celebraciones">0</span>
+        </button>
+      </div>
+
+      <!-- Contenedor de secciones por categoría -->
+      <div id="categorySections">
+        <!-- Se generan dinámicamente con JS -->
       </div>
     </div>
   </section>
@@ -1458,7 +1642,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>© 2026 Unipar · Hecho con <i class="fas fa-heart"></i> para nuestra comunidad</p>
+      <p>© 2026 Escuela Comunitaria Semillas · Hecho con <i class="fas fa-heart"></i> para nuestra comunidad</p>
     </div>
   </footer>
 
@@ -1479,9 +1663,14 @@
         <div class="lightbox-loading"><i class="fas fa-spinner fa-spin"></i></div>
         <img id="lightboxImage" src="" alt="">
       </div>
-      <div class="lightbox-caption" id="lightboxCaption"></div>
-      <div class="lightbox-counter" id="lightboxCounter"></div>
+      <div class="lightbox-info">
+        <div class="lightbox-category" id="lightboxCategory"></div>
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+      </div>
     </div>
+
+    <div class="lightbox-progress" id="lightboxProgress"></div>
   </div>
 
   <script>
@@ -1516,67 +1705,202 @@
       });
     });
 
-    // ============ GALERÍA CON IMÁGENES DE UNSPLASH ============
-    // Cada imagen tiene: src (miniatura), full (versión grande), caption y tamaño en grid
-    const galleryItems = [
-      {
-        src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80&auto=format&fit=crop',
-        full: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&q=90&auto=format&fit=crop',
-        caption: 'Jornada de puertas abiertas 2024',
-        size: 'large'
+    // ============ DATOS DE LA GALERÍA POR CATEGORÍAS ============
+    const galleryData = {
+      actividades: {
+        title: 'Actividades',
+        description: 'Momentos de aprendizaje, juego y convivencia en el día a día',
+        icon: 'fa-users',
+        cssClass: 'cat-actividades',
+        items: [
+          {
+            src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Clase al aire libre'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Aprendizaje colaborativo'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Trabajo en grupo'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Lectura compartida'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Recreo y juegos'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Deporte y movimiento'
+          }
+        ]
       },
-      {
-        src: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80&auto=format&fit=crop',
-        full: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1600&q=90&auto=format&fit=crop',
-        caption: 'Taller de pintura y arte',
-        size: ''
+      talleres: {
+        title: 'Talleres',
+        description: 'Espacios creativos donde exploramos arte, tecnología y naturaleza',
+        icon: 'fa-palette',
+        cssClass: 'cat-talleres',
+        items: [
+          {
+            src: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Taller de pintura y arte'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Taller de música'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Alfabetización digital'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Huerta comunitaria'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Taller de cocina saludable'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Taller de ciencias'
+          }
+        ]
       },
-      {
-        src: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80&auto=format&fit=crop',
-        full: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1600&q=90&auto=format&fit=crop',
-        caption: 'Festival de música comunitario',
-        size: ''
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=80&auto=format&fit=crop',
-        full: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=90&auto=format&fit=crop',
-        caption: 'Huerta comunitaria y agricultura urbana',
-        size: 'wide'
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80&auto=format&fit=crop',
-        full: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=1600&q=90&auto=format&fit=crop',
-        caption: 'Club de lectura y biblioteca',
-        size: ''
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=600&q=80&auto=format&fit=crop',
-        full: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=1600&q=90&auto=format&fit=crop',
-        caption: 'Celebración del día del niño',
-        size: ''
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=900&q=80&auto=format&fit=crop',
-        full: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=1600&q=90&auto=format&fit=crop',
-        caption: 'Clase de alfabetización digital',
-        size: 'wide'
+      celebraciones: {
+        title: 'Celebraciones',
+        description: 'Fiestas, festivales y momentos especiales que unen a la comunidad',
+        icon: 'fa-gift',
+        cssClass: 'cat-celebraciones',
+        items: [
+          {
+            src: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Día del niño'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Festival de fin de año'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Graduación de estudiantes'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Fiesta de aniversario'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Celebración navideña'
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1533294455009-a77b7557d2d1?w=700&q=80&auto=format&fit=crop',
+            full: 'https://images.unsplash.com/photo-1533294455009-a77b7557d2d1?w=1600&q=90&auto=format&fit=crop',
+            caption: 'Festival cultural'
+          }
+        ]
       }
-    ];
+    };
 
-    const galleryGrid = document.getElementById('galleryGrid');
+    // ============ CONSTRUIR LA GALERÍA ============
+    const categorySections = document.getElementById('categorySections');
+    const categoryOrder = ['actividades', 'talleres', 'celebraciones'];
 
-    // Construir la galería dinámicamente
-    galleryItems.forEach((item, index) => {
-      const div = document.createElement('div');
-      div.className = 'gallery-item reveal' + (item.size ? ' ' + item.size : '');
-      div.dataset.index = index;
-      div.innerHTML = `
-        <img src="${item.src}" alt="${item.caption}" loading="lazy">
-        <div class="gallery-zoom-icon"><i class="fas fa-expand"></i></div>
-        <div class="gallery-caption">${item.caption}</div>
+    // Estructura plana para el lightbox: [{categoryKey, itemIndex, ...item}]
+    const flatItems = [];
+
+    categoryOrder.forEach(catKey => {
+      const cat = galleryData[catKey];
+
+      // Actualizar contador de la tab
+      document.getElementById(`count-${catKey}`).textContent = cat.items.length;
+
+      // Crear sección
+      const section = document.createElement('div');
+      section.className = `category-section ${catKey === 'actividades' ? 'active' : ''}`;
+      section.dataset.category = catKey;
+
+      // Heading
+      const heading = document.createElement('div');
+      heading.className = `category-heading ${cat.cssClass}`;
+      heading.innerHTML = `
+        <div class="category-heading-icon"><i class="fas ${cat.icon}"></i></div>
+        <div>
+          <h3>${cat.title}</h3>
+          <p>${cat.description}</p>
+        </div>
       `;
-      div.addEventListener('click', () => openLightbox(index));
-      galleryGrid.appendChild(div);
+      section.appendChild(heading);
+
+      // Grid
+      const grid = document.createElement('div');
+      grid.className = 'category-gallery';
+
+      cat.items.forEach((item, idx) => {
+        const globalIndex = flatItems.length;
+        flatItems.push({
+          categoryKey: catKey,
+          categoryTitle: cat.title,
+          categoryCss: cat.cssClass,
+          categoryIcon: cat.icon,
+          ...item
+        });
+
+        const div = document.createElement('div');
+        div.className = 'gallery-item';
+        div.innerHTML = `
+          <img src="${item.src}" alt="${item.caption}" loading="lazy">
+          <div class="gallery-zoom-icon"><i class="fas fa-expand"></i></div>
+          <div class="gallery-caption">${item.caption}</div>
+        `;
+        div.addEventListener('click', () => openLightbox(globalIndex));
+        grid.appendChild(div);
+      });
+
+      section.appendChild(grid);
+      categorySections.appendChild(section);
+    });
+
+    // ============ TABS DE CATEGORÍA ============
+    const tabs = document.querySelectorAll('.category-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetCat = tab.dataset.category;
+
+        // Activar tab
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        // Mostrar sección correspondiente
+        document.querySelectorAll('.category-section').forEach(sec => {
+          if (sec.dataset.category === targetCat) {
+            sec.classList.add('active');
+          } else {
+            sec.classList.remove('active');
+          }
+        });
+      });
     });
 
     // ============ LIGHTBOX ============
@@ -1584,12 +1908,28 @@
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxCaption = document.getElementById('lightboxCaption');
     const lightboxCounter = document.getElementById('lightboxCounter');
+    const lightboxCategory = document.getElementById('lightboxCategory');
     const lightboxClose = document.getElementById('lightboxClose');
     const lightboxPrev = document.getElementById('lightboxPrev');
     const lightboxNext = document.getElementById('lightboxNext');
     const lightboxImageWrapper = document.getElementById('lightboxImageWrapper');
+    const lightboxProgress = document.getElementById('lightboxProgress');
 
     let currentIndex = 0;
+
+    // Construir indicadores de progreso
+    flatItems.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'lightbox-progress-dot';
+      dot.setAttribute('aria-label', `Ir a imagen ${i + 1}`);
+      dot.addEventListener('click', () => {
+        currentIndex = i;
+        updateLightbox();
+      });
+      lightboxProgress.appendChild(dot);
+    });
+
+    const progressDots = lightboxProgress.querySelectorAll('.lightbox-progress-dot');
 
     function openLightbox(index) {
       currentIndex = index;
@@ -1604,12 +1944,12 @@
     }
 
     function updateLightbox() {
-      const item = galleryItems[currentIndex];
-      
-      // Mostrar estado de carga
+      const item = flatItems[currentIndex];
+
+      // Estado de carga
       lightboxImageWrapper.classList.add('loading');
-      
-      // Cargar imagen
+
+      // Cargar imagen grande
       const img = new Image();
       img.onload = () => {
         lightboxImage.src = item.full;
@@ -1622,17 +1962,27 @@
       };
       img.src = item.full;
 
+      // Actualizar textos
       lightboxCaption.textContent = item.caption;
-      lightboxCounter.textContent = `${currentIndex + 1} / ${galleryItems.length}`;
+      lightboxCounter.textContent = `${currentIndex + 1} / ${flatItems.length}`;
+
+      // Categoría con clase e icono
+      lightboxCategory.className = `lightbox-category ${item.categoryCss}`;
+      lightboxCategory.innerHTML = `<i class="fas ${item.categoryIcon}"></i> ${item.categoryTitle}`;
+
+      // Actualizar indicadores
+      progressDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
     }
 
     function nextImage() {
-      currentIndex = (currentIndex + 1) % galleryItems.length;
+      currentIndex = (currentIndex + 1) % flatItems.length;
       updateLightbox();
     }
 
     function prevImage() {
-      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+      currentIndex = (currentIndex - 1 + flatItems.length) % flatItems.length;
       updateLightbox();
     }
 
@@ -1640,17 +1990,14 @@
     lightboxNext.addEventListener('click', nextImage);
     lightboxPrev.addEventListener('click', prevImage);
 
-    // Cerrar al hacer clic fuera de la imagen
+    // Cerrar al hacer clic fuera
     lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        closeLightbox();
-      }
+      if (e.target === lightbox) closeLightbox();
     });
 
-    // Navegación con teclado
+    // Teclado
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('active')) return;
-      
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowRight') nextImage();
       if (e.key === 'ArrowLeft') prevImage();
@@ -1660,20 +2007,18 @@
     function animateCounter(element, target, duration = 2000) {
       const start = 0;
       const startTime = performance.now();
-      const suffix = element.textContent.includes('%') ? '%' : '';
-      const prefix = element.textContent.includes('+') ? '+' : '';
 
       function update(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
         const current = Math.floor(start + (target - start) * easeOut);
-        element.textContent = prefix + current + suffix;
+        element.textContent = current;
 
         if (progress < 1) {
           requestAnimationFrame(update);
         } else {
-          element.textContent = prefix + target + suffix;
+          element.textContent = target;
         }
       }
       requestAnimationFrame(update);
@@ -1709,26 +2054,23 @@
 
     statNumbers.forEach(num => counterObserver.observe(num));
 
-    // ============ SCROLL SUAVE CON OFFSET ============
+    // ============ SCROLL SUAVE ============
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
         if (href === '#') return;
-        
+
         e.preventDefault();
         const target = document.querySelector(href);
         if (target) {
           const offset = 80;
           const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
         }
       });
     });
 
-    // ============ PARALLAX SUTIL EN HERO ============
+    // ============ PARALLAX HERO ============
     window.addEventListener('scroll', () => {
       const scrolled = window.pageYOffset;
       const badges = document.querySelectorAll('.hero-badge');
