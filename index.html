@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reporte de Estadísticas | Dashboard</title>
-  <!-- Fuentes y iconos -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <title>Escuela Comunitaria Semillas | Educación para todos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -14,723 +13,1412 @@
       box-sizing: border-box;
     }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f5f7fb;
-      color: #1e293b;
-      line-height: 1.5;
-      padding: 2rem 1.5rem;
+    :root {
+      --verde: #2d6a4f;
+      --verde-claro: #52b788;
+      --verde-suave: #d8f3dc;
+      --tierra: #bc6c25;
+      --tierra-claro: #e9c46a;
+      --crema: #fefae0;
+      --carbon: #1b1b1b;
+      --gris: #6b705c;
+      --blanco: #ffffff;
     }
 
-    .container {
-      max-width: 1280px;
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--carbon);
+      background: var(--crema);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ============ NAVBAR ============ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(254, 250, 224, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1rem 2rem;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    .navbar.scrolled {
+      padding: 0.75rem 2rem;
+      background: rgba(254, 250, 224, 0.98);
+      border-bottom: 1px solid rgba(45, 106, 79, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 1.35rem;
+      color: var(--verde);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--verde);
+      border-radius: 50% 50% 50% 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--crema);
+      font-size: 1.1rem;
+      transform: rotate(-45deg);
+    }
+
+    .logo-icon i {
+      transform: rotate(45deg);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--carbon);
+      font-weight: 500;
+      font-size: 0.95rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--tierra);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--tierra);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .btn-nav {
+      background: var(--verde);
+      color: var(--crema) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 600 !important;
+      transition: all 0.3s ease;
+    }
+
+    .btn-nav:hover {
+      background: var(--tierra);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(188, 108, 37, 0.25);
+    }
+
+    .btn-nav::after {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--verde);
+      cursor: pointer;
+    }
+
+    /* ============ HERO ============ */
+    .hero {
+      min-height: 100vh;
+      padding: 9rem 2rem 5rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(82, 183, 136, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(233, 196, 106, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--verde-suave);
+      color: var(--verde);
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-tag i {
+      font-size: 0.75rem;
+    }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      color: var(--carbon);
+    }
+
+    .hero h1 .highlight {
+      color: var(--verde);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero h1 .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 0.1em;
+      left: 0;
+      right: 0;
+      height: 0.25em;
+      background: var(--tierra-claro);
+      z-index: -1;
+      border-radius: 4px;
+    }
+
+    .hero p {
+      font-size: 1.125rem;
+      color: var(--gris);
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.75rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--verde);
+      color: var(--crema);
+    }
+
+    .btn-primary:hover {
+      background: #1b4332;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(45, 106, 79, 0.25);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--carbon);
+      border: 2px solid var(--carbon);
+    }
+
+    .btn-secondary:hover {
+      background: var(--carbon);
+      color: var(--crema);
+      transform: translateY(-3px);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      border-radius: 2rem 2rem 2rem 6rem;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(45, 106, 79, 0.15);
+      aspect-ratio: 4/5;
+      background: var(--verde-suave);
+    }
+
+    .hero-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Ilustración SVG por si no carga la imagen */
+    .hero-illustration {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--verde-suave) 0%, #b7e4c7 100%);
+      font-size: 8rem;
+      color: var(--verde);
+    }
+
+    .hero-badge {
+      position: absolute;
+      background: var(--blanco);
+      padding: 1rem 1.25rem;
+      border-radius: 1.25rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero-badge.badge-1 {
+      top: 10%;
+      left: -8%;
+    }
+
+    .hero-badge.badge-2 {
+      bottom: 12%;
+      right: -6%;
+      animation-delay: 1.5s;
+    }
+
+    .hero-badge-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .badge-1 .hero-badge-icon {
+      background: var(--verde-suave);
+      color: var(--verde);
+    }
+
+    .badge-2 .hero-badge-icon {
+      background: #fef3c7;
+      color: var(--tierra);
+    }
+
+    .hero-badge-text strong {
+      display: block;
+      font-family: 'Fraunces', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--carbon);
+    }
+
+    .hero-badge-text span {
+      font-size: 0.75rem;
+      color: var(--gris);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ============ SECCIÓN GENÉRICA ============ */
+    section {
+      padding: 5rem 2rem;
+      position: relative;
+    }
+
+    .section-container {
+      max-width: 1200px;
       margin: 0 auto;
     }
 
-    /* Header */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
-      gap: 1rem;
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
     }
 
-    .header h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #0f172a 0%, #3b82f6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .header h1 i {
-      background: none;
-      -webkit-text-fill-color: #3b82f6;
-      margin-right: 0.5rem;
-    }
-
-    .badge {
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      font-size: 0.875rem;
+    .section-label {
+      display: inline-block;
+      color: var(--tierra);
       font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .badge i {
-      font-size: 0.75rem;
-    }
-
-    /* Grid de métricas */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .metric-card {
-      background: white;
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
-      transition: all 0.2s ease;
-      border: 1px solid #eef2f6;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .metric-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-      border-color: #dbeafe;
-    }
-
-    .metric-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
       margin-bottom: 1rem;
     }
 
-    .metric-title {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-
-    .metric-icon {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.125rem;
-    }
-
-    .metric-value {
-      font-size: 2rem;
+    .section-header h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 700;
+      line-height: 1.15;
       letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--gris);
+      font-size: 1.05rem;
+    }
+
+    /* ============ STATS ============ */
+    .stats {
+      background: var(--verde);
+      color: var(--crema);
+      padding: 4rem 2rem;
+    }
+
+    .stats-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 1rem;
+    }
+
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 900;
+      color: var(--tierra-claro);
+      line-height: 1;
       margin-bottom: 0.5rem;
     }
 
-    .metric-trend {
-      display: flex;
-      align-items: center;
-      gap: 0.375rem;
-      font-size: 0.875rem;
+    .stat-label {
+      font-size: 0.95rem;
+      opacity: 0.9;
       font-weight: 500;
     }
 
-    .trend-up {
-      color: #10b981;
+    /* ============ PROGRAMAS ============ */
+    .programs {
+      background: var(--crema);
     }
 
-    .trend-down {
-      color: #ef4444;
-    }
-
-    /* Sección de gráficos */
-    .charts-section {
+    .programs-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.75rem;
     }
 
-    @media (max-width: 768px) {
-      .charts-section {
-        grid-template-columns: 1fr;
-      }
+    .program-card {
+      background: var(--blanco);
+      border-radius: 1.75rem;
+      padding: 2rem;
+      border: 1px solid rgba(45, 106, 79, 0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
 
-    .chart-card {
-      background: white;
-      border-radius: 1.5rem;
-      padding: 1.75rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-      border: 1px solid #eef2f6;
+    .program-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--verde);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
     }
 
-    .chart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
+    .program-card:hover::before {
+      transform: scaleX(1);
     }
 
-    .chart-header h2 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: #0f172a;
+    .program-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 40px rgba(45, 106, 79, 0.1);
+      border-color: transparent;
     }
 
-    .chart-header span {
-      font-size: 0.75rem;
-      color: #64748b;
-      background: #f1f5f9;
-      padding: 0.25rem 0.75rem;
-      border-radius: 999px;
-    }
-
-    /* Gráfico de barras personalizado con CSS */
-    .bar-chart {
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-end;
-      height: 200px;
-      gap: 0.5rem;
-      padding-top: 1rem;
-    }
-
-    .bar-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 1;
-      height: 100%;
-      justify-content: flex-end;
-    }
-
-    .bar {
-      width: 100%;
-      max-width: 40px;
-      background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
-      border-radius: 0.5rem 0.5rem 0.25rem 0.25rem;
-      transition: height 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-      min-height: 4px;
-      height: 0; /* se anima con JS */
-    }
-
-    .bar-label {
-      margin-top: 0.75rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #64748b;
-      text-align: center;
-    }
-
-    /* Gráfico de líneas / área simple con SVG */
-    .line-chart-container {
-      width: 100%;
-      height: 200px;
+    .program-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.4s ease;
     }
 
-    .line-chart {
+    .program-card:hover .program-icon {
+      transform: scale(1.1) rotate(-5deg);
+    }
+
+    .icon-verde { background: var(--verde-suave); color: var(--verde); }
+    .icon-tierra { background: #fef3c7; color: var(--tierra); }
+    .icon-azul { background: #dbeafe; color: #2563eb; }
+    .icon-rosa { background: #fce7f3; color: #db2777; }
+
+    .program-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .program-card p {
+      color: var(--gris);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .program-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--gris);
+      flex-wrap: wrap;
+    }
+
+    .program-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .program-meta i {
+      color: var(--verde);
+    }
+
+    /* ============ GALERÍA ============ */
+    .gallery {
+      background: var(--blanco);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 200px);
+      gap: 1rem;
+    }
+
+    .gallery-item {
+      border-radius: 1.25rem;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: var(--verde-suave);
+    }
+
+    .gallery-item img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
     }
 
-    /* Tabla de datos */
-    .table-section {
-      background: white;
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(27, 27, 27, 0.6), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      color: var(--blanco);
+      font-weight: 600;
+      font-size: 0.9rem;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-item.large {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .gallery-item.wide {
+      grid-column: span 2;
+    }
+
+    /* Placeholder de gradientes por si no hay imágenes */
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--verde);
+    }
+
+    .gallery-item:nth-child(1) .gallery-placeholder { background: linear-gradient(135deg, #d8f3dc, #b7e4c7); }
+    .gallery-item:nth-child(2) .gallery-placeholder { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .gallery-item:nth-child(3) .gallery-placeholder { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .gallery-item:nth-child(4) .gallery-placeholder { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+    .gallery-item:nth-child(5) .gallery-placeholder { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+
+    /* ============ TESTIMONIOS ============ */
+    .testimonials {
+      background: var(--crema);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      background: var(--blanco);
       border-radius: 1.5rem;
-      padding: 1.75rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-      border: 1px solid #eef2f6;
+      padding: 2rem;
+      border: 1px solid rgba(45, 106, 79, 0.08);
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(45, 106, 79, 0.08);
+    }
+
+    .quote-icon {
+      font-family: 'Fraunces', serif;
+      font-size: 4rem;
+      color: var(--verde-suave);
+      line-height: 0.5;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card p {
+      color: var(--carbon);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(45, 106, 79, 0.1);
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--verde);
+      color: var(--crema);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+    }
+
+    .author-info strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .author-info span {
+      font-size: 0.8rem;
+      color: var(--gris);
+    }
+
+    /* ============ CTA ============ */
+    .cta {
+      background: var(--verde);
+      color: var(--crema);
+      border-radius: 2rem;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      max-width: 1100px;
+      margin: 0 auto 5rem;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(233, 196, 106, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cta::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      left: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(82, 183, 136, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .cta p {
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta .btn-primary {
+      background: var(--tierra);
+      color: var(--blanco);
+    }
+
+    .cta .btn-primary:hover {
+      background: var(--tierra-claro);
+      color: var(--carbon);
+    }
+
+    .cta .btn-secondary {
+      border-color: var(--crema);
+      color: var(--crema);
+    }
+
+    .cta .btn-secondary:hover {
+      background: var(--crema);
+      color: var(--verde);
+    }
+
+    /* ============ FOOTER ============ */
+    footer {
+      background: var(--carbon);
+      color: #a3a3a3;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand .logo {
+      color: var(--crema);
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand .logo-icon {
+      background: var(--verde-claro);
+      color: var(--carbon);
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      max-width: 300px;
+      color: #a3a3a3;
+    }
+
+    .footer-col h4 {
+      color: var(--crema);
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+      font-weight: 700;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-col ul a {
+      color: #a3a3a3;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col ul a:hover {
+      color: var(--verde-claro);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.75rem;
       margin-top: 1.5rem;
     }
 
-    .table-header {
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      justify-content: center;
+      color: var(--crema);
+      text-decoration: none;
+      transition: all 0.3s;
     }
 
-    .table-header h2 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: #0f172a;
+    .footer-social a:hover {
+      background: var(--verde-claro);
+      color: var(--carbon);
+      transform: translateY(-3px);
     }
 
-    .table-responsive {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.875rem;
-    }
-
-    th {
-      text-align: left;
-      padding: 0.75rem 0.5rem;
-      font-weight: 600;
-      color: #475569;
-      border-bottom: 1px solid #e2e8f0;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    td {
-      padding: 0.875rem 0.5rem;
-      border-bottom: 1px solid #f1f5f9;
-      color: #1e293b;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .status {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .status-completed {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .status-pending {
-      background: #fef9c3;
-      color: #854d0e;
-    }
-
-    .status-failed {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    /* Footer */
-    .footer {
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 2rem;
       text-align: center;
-      margin-top: 3rem;
-      font-size: 0.875rem;
-      color: #94a3b8;
-      border-top: 1px solid #e2e8f0;
-      padding-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #6b7280;
     }
 
-    .footer i {
-      color: #3b82f6;
+    .footer-bottom i {
+      color: var(--verde-claro);
       margin: 0 0.25rem;
     }
 
-    /* Animaciones */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+    /* ============ ANIMACIONES SCROLL ============ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 968px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
       }
-      to {
-        opacity: 1;
+
+      .hero-visual {
+        max-width: 450px;
+        margin: 0 auto;
+      }
+
+      .hero-badge.badge-1 { left: -2%; }
+      .hero-badge.badge-2 { right: -2%; }
+
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: var(--crema);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        transform: translateY(-150%);
+        transition: transform 0.4s ease;
+        align-items: flex-start;
+      }
+
+      .nav-links.open {
         transform: translateY(0);
       }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 180px);
+      }
+
+      .gallery-item.large {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      .gallery-item.wide {
+        grid-column: span 2;
+      }
+
+      .hero {
+        padding-top: 7rem;
+      }
     }
 
-    .metric-card, .chart-card, .table-section {
-      animation: fadeInUp 0.5s ease forwards;
-      opacity: 0;
+    @media (max-width: 480px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        justify-content: center;
+        width: 100%;
+      }
+
+      .hero-badge {
+        padding: 0.75rem 1rem;
+      }
+
+      .hero-badge-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+      }
+
+      .hero-badge-text strong {
+        font-size: 1rem;
+      }
     }
-
-    .metric-card:nth-child(1) { animation-delay: 0.05s; }
-    .metric-card:nth-child(2) { animation-delay: 0.1s; }
-    .metric-card:nth-child(3) { animation-delay: 0.15s; }
-    .metric-card:nth-child(4) { animation-delay: 0.2s; }
-    .chart-card:nth-child(1) { animation-delay: 0.25s; }
-    .chart-card:nth-child(2) { animation-delay: 0.3s; }
-    .table-section { animation-delay: 0.35s; }
-
-    /* Colores para iconos */
-    .icon-blue { background: #dbeafe; color: #2563eb; }
-    .icon-green { background: #dcfce7; color: #16a34a; }
-    .icon-purple { background: #ede9fe; color: #7c3aed; }
-    .icon-amber { background: #fef3c7; color: #d97706; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <div class="header">
-      <h1><i class="fas fa-chart-pie"></i> Reporte de Estadísticas</h1>
-      <div class="badge">
-        <i class="fas fa-calendar-alt"></i>
-        Última actualización: Hoy, 14:30 PM
-      </div>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <span class="logo-icon"><i class="fas fa-seedling"></i></span>
+        Semillas
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#programas">Programas</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#testimonios">Testimonios</a></li>
+        <li><a href="#contacto" class="btn-nav">Inscríbete</a></li>
+      </ul>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
+  </nav>
 
-    <!-- Métricas principales -->
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Visitas totales</span>
-          <div class="metric-icon icon-blue"><i class="fas fa-eye"></i></div>
-        </div>
-        <div class="metric-value" id="visitsValue">0</div>
-        <div class="metric-trend trend-up">
-          <i class="fas fa-arrow-up"></i> +12.5% vs mes anterior
-        </div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Usuarios activos</span>
-          <div class="metric-icon icon-green"><i class="fas fa-users"></i></div>
-        </div>
-        <div class="metric-value" id="usersValue">0</div>
-        <div class="metric-trend trend-up">
-          <i class="fas fa-arrow-up"></i> +8.2% vs mes anterior
-        </div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Tasa de conversión</span>
-          <div class="metric-icon icon-purple"><i class="fas fa-percent"></i></div>
-        </div>
-        <div class="metric-value" id="conversionValue">0</div>
-        <div class="metric-trend trend-down">
-          <i class="fas fa-arrow-down"></i> -1.8% vs mes anterior
-        </div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Ingresos</span>
-          <div class="metric-icon icon-amber"><i class="fas fa-dollar-sign"></i></div>
-        </div>
-        <div class="metric-value" id="revenueValue">0</div>
-        <div class="metric-trend trend-up">
-          <i class="fas fa-arrow-up"></i> +15.3% vs mes anterior
-        </div>
-      </div>
-    </div>
-
-    <!-- Sección de gráficos -->
-    <div class="charts-section">
-      <!-- Gráfico de barras -->
-      <div class="chart-card">
-        <div class="chart-header">
-          <h2>Visitas por mes</h2>
-          <span>2024</span>
-        </div>
-        <div class="bar-chart" id="barChart">
-          <!-- Las barras se generan con JS -->
-        </div>
-      </div>
-
-      <!-- Gráfico de líneas (SVG) -->
-      <div class="chart-card">
-        <div class="chart-header">
-          <h2>Crecimiento de usuarios</h2>
-          <span>Últimos 6 meses</span>
-        </div>
-        <div class="line-chart-container">
-          <svg class="line-chart" viewBox="0 0 500 200" preserveAspectRatio="none">
-            <!-- Área bajo la línea -->
-            <defs>
-              <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#3b82f6; stop-opacity:0.25" />
-                <stop offset="100%" style="stop-color:#3b82f6; stop-opacity:0" />
-              </linearGradient>
-            </defs>
-            <!-- Línea y área (se animan con JS) -->
-            <path id="areaPath" d="" fill="url(#areaGradient)" stroke="none" />
-            <path id="linePath" d="" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-            <!-- Puntos -->
-            <g id="dotsGroup"></g>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tabla de datos -->
-    <div class="table-section">
-      <div class="table-header">
-        <h2>Últimos informes generados</h2>
-        <span class="badge" style="background:#f1f5f9; color:#475569;">
-          <i class="fas fa-file-alt"></i> 4 reportes
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <span class="hero-tag">
+          <i class="fas fa-heart"></i> Escuela Comunitaria desde 2008
         </span>
+        <h1>Aprender juntos, <span class="highlight">crecer</span> en comunidad</h1>
+        <p>Somos un espacio educativo donde niños, jóvenes y adultos aprenden a través del juego, el arte y el trabajo colaborativo. Educación gratuita y de calidad para nuestro barrio.</p>
+        <div class="hero-buttons">
+          <a href="#programas" class="btn btn-primary">
+            <i class="fas fa-book-open"></i> Ver programas
+          </a>
+          <a href="#galeria" class="btn btn-secondary">
+            <i class="fas fa-images"></i> Conocer la escuela
+          </a>
+        </div>
       </div>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre del reporte</th>
-              <th>Fecha</th>
-              <th>Estado</th>
-              <th>Registros</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>#001</td>
-              <td>Ventas trimestrales Q1</td>
-              <td>10/04/2024</td>
-              <td><span class="status status-completed">Completado</span></td>
-              <td>1,245</td>
-            </tr>
-            <tr>
-              <td>#002</td>
-              <td>Análisis de tráfico web</td>
-              <td>08/04/2024</td>
-              <td><span class="status status-completed">Completado</span></td>
-              <td>8,932</td>
-            </tr>
-            <tr>
-              <td>#003</td>
-              <td>Encuesta de satisfacción</td>
-              <td>05/04/2024</td>
-              <td><span class="status status-pending">Pendiente</span></td>
-              <td>432</td>
-            </tr>
-            <tr>
-              <td>#004</td>
-              <td>Rendimiento de campaña</td>
-              <td>02/04/2024</td>
-              <td><span class="status status-failed">Fallido</span></td>
-              <td>0</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="hero-visual">
+        <div class="hero-image-wrapper">
+          <div class="hero-illustration">
+            <i class="fas fa-chalkboard-user"></i>
+          </div>
+        </div>
+        <div class="hero-badge badge-1">
+          <div class="hero-badge-icon"><i class="fas fa-users"></i></div>
+          <div class="hero-badge-text">
+            <strong>+450</strong>
+            <span>estudiantes activos</span>
+          </div>
+        </div>
+        <div class="hero-badge badge-2">
+          <div class="hero-badge-icon"><i class="fas fa-award"></i></div>
+          <div class="hero-badge-text">
+            <strong>16 años</strong>
+            <span>de trayectoria</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-number" data-target="450">0</div>
+        <div class="stat-label">Estudiantes activos</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number" data-target="32">0</div>
+        <div class="stat-label">Docentes voluntarios</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number" data-target="12">0</div>
+        <div class="stat-label">Talleres y programas</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number" data-target="98">0</div>
+        <div class="stat-label">% de satisfacción</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAMAS ============ -->
+  <section class="programs" id="programas">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="section-label">Nuestros programas</span>
+        <h2>Espacios para aprender y compartir</h2>
+        <p>Ofrecemos talleres gratuitos para todas las edades, enfocados en el desarrollo integral y la participación comunitaria.</p>
+      </div>
+
+      <div class="programs-grid">
+        <article class="program-card reveal">
+          <div class="program-icon icon-verde"><i class="fas fa-child"></i></div>
+          <h3>Apoyo escolar</h3>
+          <p>Refuerzo académico en lenguaje, matemáticas y ciencias para niños de primaria y secundaria.</p>
+          <div class="program-meta">
+            <span><i class="fas fa-clock"></i> Lun a Vie · 15-18h</span>
+            <span><i class="fas fa-user-graduate"></i> 6-15 años</span>
+          </div>
+        </article>
+
+        <article class="program-card reveal">
+          <div class="program-icon icon-tierra"><i class="fas fa-palette"></i></div>
+          <h3>Arte y cultura</h3>
+          <p>Talleres de pintura, música, teatro y danza que despiertan la creatividad y la expresión.</p>
+          <div class="program-meta">
+            <span><i class="fas fa-clock"></i> Sábados · 10-13h</span>
+            <span><i class="fas fa-user-graduate"></i> Todas las edades</span>
+          </div>
+        </article>
+
+        <article class="program-card reveal">
+          <div class="program-icon icon-azul"><i class="fas fa-laptop-code"></i></div>
+          <h3>Alfabetización digital</h3>
+          <p>Curso de computación, internet y herramientas digitales para adultos y jóvenes.</p>
+          <div class="program-meta">
+            <span><i class="fas fa-clock"></i> Mar y Jue · 18-20h</span>
+            <span><i class="fas fa-user-graduate"></i> 16+ años</span>
+          </div>
+        </article>
+
+        <article class="program-card reveal">
+          <div class="program-icon icon-rosa"><i class="fas fa-hand-holding-heart"></i></div>
+          <h3>Huerta comunitaria</h3>
+          <p>Aprendemos sobre agricultura urbana, sostenibilidad y alimentación saludable.</p>
+          <div class="program-meta">
+            <span><i class="fas fa-clock"></i> Domingos · 9-12h</span>
+            <span><i class="fas fa-user-graduate"></i> Familias</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALERÍA ============ -->
+  <section class="gallery" id="galeria">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="section-label">Galería</span>
+        <h2>Momentos de nuestra comunidad</h2>
+        <p>Un recorrido visual por las actividades, talleres y celebraciones que nos unen.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item large reveal">
+          <div class="gallery-placeholder"><i class="fas fa-users"></i></div>
+          <div class="gallery-caption">Jornada de puertas abiertas 2024</div>
+        </div>
+        <div class="gallery-item reveal">
+          <div class="gallery-placeholder"><i class="fas fa-paint-brush"></i></div>
+          <div class="gallery-caption">Taller de pintura</div>
+        </div>
+        <div class="gallery-item reveal">
+          <div class="gallery-placeholder"><i class="fas fa-music"></i></div>
+          <div class="gallery-caption">Festival de música</div>
+        </div>
+        <div class="gallery-item wide reveal">
+          <div class="gallery-placeholder"><i class="fas fa-seedling"></i></div>
+          <div class="gallery-caption">Huerta comunitaria</div>
+        </div>
+        <div class="gallery-item reveal">
+          <div class="gallery-placeholder"><i class="fas fa-book"></i></div>
+          <div class="gallery-caption">Club de lectura</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIOS ============ -->
+  <section class="testimonials" id="testimonios">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="section-label">Testimonios</span>
+        <h2>Voces de nuestra comunidad</h2>
+        <p>Lo que dicen las familias, estudiantes y voluntarios sobre la escuela.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="quote-icon">"</div>
+          <p>Mi hija ha crecido muchísimo desde que viene a la escuela. No solo aprende matemáticas, también ha hecho amigos y descubrió su pasión por el teatro.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">MR</div>
+            <div class="author-info">
+              <strong>María Rodríguez</strong>
+              <span>Madre de familia</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="quote-icon">"</div>
+          <p>Como voluntario, la escuela me ha dado más de lo que yo doy. Ver a los chicos aprender y superarse cada día es una experiencia transformadora.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">CL</div>
+            <div class="author-info">
+              <strong>Carlos López</strong>
+              <span>Docente voluntario</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="quote-icon">"</div>
+          <p>Aquí aprendí a usar la computadora y ahora puedo ayudar a mi hijo con la tarea. La escuela es un lugar donde siempre te reciben con una sonrisa.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AG</div>
+            <div class="author-info">
+              <strong>Ana Gómez</strong>
+              <span>Estudiante de alfabetización digital</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="contacto">
+    <div class="cta reveal">
+      <div class="cta-content">
+        <h2>¿Quieres ser parte de la comunidad?</h2>
+        <p>Inscríbete en nuestros programas, súmate como voluntario o apadrina un taller. Cada aporte hace posible que la educación llegue a más familias.</p>
+        <div class="hero-buttons" style="justify-content: center;">
+          <a href="#" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Inscribirme ahora
+          </a>
+          <a href="#" class="btn btn-secondary">
+            <i class="fas fa-hand-holding-heart"></i> Quiero ser voluntario
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <span class="logo-icon"><i class="fas fa-seedling"></i></span>
+          Semillas
+        </a>
+        <p>Escuela comunitaria sin fines de lucro dedicada a la educación integral y gratuita de niños, jóvenes y adultos de nuestro barrio.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Programas</h4>
+        <ul>
+          <li><a href="#programas">Apoyo escolar</a></li>
+          <li><a href="#programas">Arte y cultura</a></li>
+          <li><a href="#programas">Alfabetización digital</a></li>
+          <li><a href="#programas">Huerta comunitaria</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Escuela</h4>
+        <ul>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#testimonios">Testimonios</a></li>
+          <li><a href="#">Historia</a></li>
+          <li><a href="#">Equipo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="#"><i class="fas fa-map-marker-alt" style="margin-right: 0.5rem; color: var(--verde-claro);"></i>Calle 45 #12-30, Barrio El Prado</a></li>
+          <li><a href="tel:+573001234567"><i class="fas fa-phone" style="margin-right: 0.5rem; color: var(--verde-claro);"></i>+57 300 123 4567</a></li>
+          <li><a href="mailto:hola@escuelasemillas.org"><i class="fas fa-envelope" style="margin-right: 0.5rem; color: var(--verde-claro);"></i>hola@escuelasemillas.org</a></li>
+        </ul>
       </div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-      <p><i class="fas fa-chart-line"></i> Reporte generado automáticamente · Datos actualizados cada 24 horas</p>
+    <div class="footer-bottom">
+      <p>© 2026 Escuela Comunitaria Semillas · Hecho con <i class="fas fa-heart"></i> para nuestra comunidad</p>
     </div>
-  </div>
+  </footer>
 
   <script>
-    (function() {
-      // ---------- 1. Animación de contadores en métricas ----------
-      const counters = [
-        { id: 'visitsValue', target: 28450, suffix: '', prefix: '', decimals: 0 },
-        { id: 'usersValue', target: 12480, suffix: '', prefix: '', decimals: 0 },
-        { id: 'conversionValue', target: 3.8, suffix: '%', prefix: '', decimals: 1 },
-        { id: 'revenueValue', target: 89250, suffix: '', prefix: '$', decimals: 0 }
-      ];
+    // ============ NAVBAR SCROLL ============
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
 
-      function animateValue(el, start, end, duration, decimals = 0, prefix = '', suffix = '') {
-        const range = end - start;
-        const startTime = performance.now();
-        
-        function update(currentTime) {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          // easeOutQuart
-          const easeOut = 1 - Math.pow(1 - progress, 4);
-          const current = start + range * easeOut;
-          
-          let formatted;
-          if (decimals > 0) {
-            formatted = current.toFixed(decimals);
-          } else {
-            formatted = Math.floor(current).toLocaleString('en-US');
-          }
-          
-          el.textContent = prefix + formatted + suffix;
-          
-          if (progress < 1) {
-            requestAnimationFrame(update);
-          } else {
-            // valor final exacto
-            if (decimals > 0) {
-              el.textContent = prefix + end.toFixed(decimals) + suffix;
-            } else {
-              el.textContent = prefix + end.toLocaleString('en-US') + suffix;
-            }
-          }
+    // ============ MENÚ MÓVIL ============
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      const icon = menuToggle.querySelector('i');
+      if (navLinks.classList.contains('open')) {
+        icon.classList.replace('fa-bars', 'fa-times');
+      } else {
+        icon.classList.replace('fa-times', 'fa-bars');
+      }
+    });
+
+    // Cerrar menú al hacer clic en un enlace
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+      });
+    });
+
+    // ============ CONTADORES ANIMADOS ============
+    function animateCounter(element, target, duration = 2000) {
+      const start = 0;
+      const startTime = performance.now();
+      const suffix = element.textContent.includes('%') ? '%' : '';
+      const prefix = element.textContent.includes('+') ? '+' : '';
+
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeOutExpo
+        const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        const current = Math.floor(start + (target - start) * easeOut);
+        element.textContent = prefix + current + suffix;
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          element.textContent = prefix + target + suffix;
         }
+      }
+      requestAnimationFrame(update);
+    }
+
+    // ============ INTERSECTION OBSERVER PARA REVEAL Y CONTADORES ============
+    const revealElements = document.querySelectorAll('.reveal');
+    const statNumbers = document.querySelectorAll('.stat-number');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+
+    // Observer específico para contadores
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(entry.target.dataset.target);
+          animateCounter(entry.target, target, 2200);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statNumbers.forEach(num => counterObserver.observe(num));
+
+    // ============ SCROLL SUAVE CON OFFSET ============
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
         
-        requestAnimationFrame(update);
-      }
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          const offset = 80;
+          const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
 
-      // Iniciar contadores después de un pequeño delay
-      setTimeout(() => {
-        counters.forEach(c => {
-          const el = document.getElementById(c.id);
-          if (el) {
-            animateValue(el, 0, c.target, 1200, c.decimals, c.prefix, c.suffix);
-          }
+    // ============ PARALLAX SUTIL EN HERO ============
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const badges = document.querySelectorAll('.hero-badge');
+      if (scrolled < 600) {
+        badges.forEach((badge, index) => {
+          const speed = index === 0 ? 0.15 : 0.1;
+          badge.style.transform = `translateY(${scrolled * speed}px)`;
         });
-      }, 300);
-
-      // ---------- 2. Gráfico de barras ----------
-      const monthlyData = [
-        { label: 'Ene', value: 4200 },
-        { label: 'Feb', value: 3800 },
-        { label: 'Mar', value: 5100 },
-        { label: 'Abr', value: 6200 },
-        { label: 'May', value: 5800 },
-        { label: 'Jun', value: 7300 },
-        { label: 'Jul', value: 8100 }
-      ];
-
-      const maxValue = Math.max(...monthlyData.map(d => d.value));
-      const barChart = document.getElementById('barChart');
-
-      // Limpiar y construir barras
-      barChart.innerHTML = '';
-      monthlyData.forEach((item, index) => {
-        const barItem = document.createElement('div');
-        barItem.className = 'bar-item';
-
-        const bar = document.createElement('div');
-        bar.className = 'bar';
-        // Altura inicial 0 para animar
-        bar.style.height = '0%';
-        // Guardamos el valor objetivo en un atributo
-        bar.dataset.targetHeight = (item.value / maxValue * 100).toFixed(1) + '%';
-
-        const label = document.createElement('span');
-        label.className = 'bar-label';
-        label.textContent = item.label;
-
-        barItem.appendChild(bar);
-        barItem.appendChild(label);
-        barChart.appendChild(barItem);
-      });
-
-      // Animar barras después de que el DOM esté listo
-      setTimeout(() => {
-        document.querySelectorAll('.bar').forEach(bar => {
-          const targetHeight = bar.dataset.targetHeight;
-          bar.style.height = targetHeight;
-        });
-      }, 400);
-
-      // ---------- 3. Gráfico de líneas SVG ----------
-      const userGrowthData = [
-        { month: 'Ene', value: 8200 },
-        { month: 'Feb', value: 8900 },
-        { month: 'Mar', value: 9800 },
-        { month: 'Abr', value: 10500 },
-        { month: 'May', value: 11800 },
-        { month: 'Jun', value: 12480 }
-      ];
-
-      const svgWidth = 500;
-      const svgHeight = 200;
-      const padding = { top: 20, right: 20, bottom: 30, left: 40 };
-      const chartWidth = svgWidth - padding.left - padding.right;
-      const chartHeight = svgHeight - padding.top - padding.bottom;
-
-      const maxUser = Math.max(...userGrowthData.map(d => d.value)) * 1.1;
-      const minUser = Math.min(...userGrowthData.map(d => d.value)) * 0.9;
-
-      // Calcular puntos
-      const points = userGrowthData.map((d, i) => {
-        const x = padding.left + (i / (userGrowthData.length - 1)) * chartWidth;
-        const y = padding.top + chartHeight - ((d.value - minUser) / (maxUser - minUser)) * chartHeight;
-        return { x, y, value: d.value, month: d.month };
-      });
-
-      // Construir path de línea
-      let linePathD = `M ${points[0].x} ${points[0].y}`;
-      for (let i = 1; i < points.length; i++) {
-        linePathD += ` L ${points[i].x} ${points[i].y}`;
       }
-
-      // Área: línea + bajar hasta el fondo y cerrar
-      const areaPathD = linePathD + 
-        ` L ${points[points.length - 1].x} ${padding.top + chartHeight} L ${points[0].x} ${padding.top + chartHeight} Z`;
-
-      const linePath = document.getElementById('linePath');
-      const areaPath = document.getElementById('areaPath');
-      
-      // Inicialmente vacíos para animar (usamos stroke-dasharray para línea)
-      linePath.setAttribute('d', linePathD);
-      areaPath.setAttribute('d', areaPathD);
-
-      // Animación de trazo para la línea
-      const totalLength = linePath.getTotalLength();
-      linePath.style.strokeDasharray = totalLength;
-      linePath.style.strokeDashoffset = totalLength;
-      
-      // Forzar reflow
-      linePath.getBoundingClientRect();
-      
-      // Animar después de un timeout
-      setTimeout(() => {
-        linePath.style.transition = 'stroke-dashoffset 1.2s ease-in-out';
-        linePath.style.strokeDashoffset = '0';
-      }, 500);
-
-      // Área fade in
-      areaPath.style.opacity = '0';
-      setTimeout(() => {
-        areaPath.style.transition = 'opacity 1s ease-in-out';
-        areaPath.style.opacity = '1';
-      }, 600);
-
-      // Añadir puntos (círculos)
-      const dotsGroup = document.getElementById('dotsGroup');
-      dotsGroup.innerHTML = '';
-      points.forEach((p, i) => {
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle.setAttribute('cx', p.x);
-        circle.setAttribute('cy', p.y);
-        circle.setAttribute('r', '5');
-        circle.setAttribute('fill', '#2563eb');
-        circle.setAttribute('stroke', 'white');
-        circle.setAttribute('stroke-width', '2');
-        circle.style.opacity = '0';
-        circle.style.transition = 'opacity 0.4s ease';
-        dotsGroup.appendChild(circle);
-
-        // Tooltip simple (title)
-        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-        title.textContent = `${p.month}: ${p.value.toLocaleString()} usuarios`;
-        circle.appendChild(title);
-
-        // Aparecer secuencialmente
-        setTimeout(() => {
-          circle.style.opacity = '1';
-        }, 800 + i * 100);
-      });
-
-      // Añadir etiquetas de meses en el eje X (opcional, pero se ve bien)
-      const labelsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      points.forEach((p) => {
-        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', p.x);
-        text.setAttribute('y', svgHeight - 8);
-        text.setAttribute('text-anchor', 'middle');
-        text.setAttribute('font-size', '10');
-        text.setAttribute('fill', '#64748b');
-        text.setAttribute('font-family', 'Inter, sans-serif');
-        text.textContent = p.month;
-        labelsGroup.appendChild(text);
-      });
-      // Insertar labels antes de los dots? no importa, se superponen bien
-      document.querySelector('.line-chart').appendChild(labelsGroup);
-
-      // Pequeña línea base (eje X)
-      const axisLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      axisLine.setAttribute('x1', padding.left);
-      axisLine.setAttribute('y1', padding.top + chartHeight);
-      axisLine.setAttribute('x2', svgWidth - padding.right);
-      axisLine.setAttribute('y2', padding.top + chartHeight);
-      axisLine.setAttribute('stroke', '#e2e8f0');
-      axisLine.setAttribute('stroke-width', '1');
-      document.querySelector('.line-chart').appendChild(axisLine);
-
-    })();
+    });
   </script>
 </body>
 </html>
