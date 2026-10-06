@@ -37,6 +37,10 @@
       overflow-x: hidden;
     }
 
+    body.no-scroll {
+      overflow: hidden;
+    }
+
     /* ============ NAVBAR ============ */
     .navbar {
       position: fixed;
@@ -321,18 +325,6 @@
       display: block;
     }
 
-    /* Ilustración SVG por si no carga la imagen */
-    .hero-illustration {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--verde-suave) 0%, #b7e4c7 100%);
-      font-size: 8rem;
-      color: var(--verde);
-    }
-
     .hero-badge {
       position: absolute;
       background: var(--blanco);
@@ -576,7 +568,7 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, 200px);
+      grid-template-rows: repeat(2, 220px);
       gap: 1rem;
     }
 
@@ -586,6 +578,12 @@
       position: relative;
       cursor: pointer;
       background: var(--verde-suave);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(45, 106, 79, 0.15);
     }
 
     .gallery-item img {
@@ -593,6 +591,7 @@
       height: 100%;
       object-fit: cover;
       transition: transform 0.6s ease;
+      display: block;
     }
 
     .gallery-item:hover img {
@@ -603,7 +602,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(27, 27, 27, 0.6), transparent 60%);
+      background: linear-gradient(to top, rgba(27, 27, 27, 0.7), transparent 60%);
       opacity: 0;
       transition: opacity 0.4s ease;
     }
@@ -624,11 +623,35 @@
       opacity: 0;
       transform: translateY(10px);
       transition: all 0.4s ease;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .gallery-item:hover .gallery-caption {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .gallery-zoom-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--verde);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.3s ease;
+      z-index: 2;
+    }
+
+    .gallery-item:hover .gallery-zoom-icon {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .gallery-item.large {
@@ -639,23 +662,6 @@
     .gallery-item.wide {
       grid-column: span 2;
     }
-
-    /* Placeholder de gradientes por si no hay imágenes */
-    .gallery-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      color: var(--verde);
-    }
-
-    .gallery-item:nth-child(1) .gallery-placeholder { background: linear-gradient(135deg, #d8f3dc, #b7e4c7); }
-    .gallery-item:nth-child(2) .gallery-placeholder { background: linear-gradient(135deg, #fef3c7, #fde68a); }
-    .gallery-item:nth-child(3) .gallery-placeholder { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-    .gallery-item:nth-child(4) .gallery-placeholder { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
-    .gallery-item:nth-child(5) .gallery-placeholder { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
 
     /* ============ TESTIMONIOS ============ */
     .testimonials {
@@ -904,6 +910,158 @@
       margin: 0 0.25rem;
     }
 
+    /* ============ LIGHTBOX ============ */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 15, 12, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+      padding: 2rem;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 1000px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(0.9);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .lightbox.active .lightbox-content {
+      transform: scale(1);
+    }
+
+    .lightbox-image-wrapper {
+      position: relative;
+      width: 100%;
+      max-height: 75vh;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+      background: #000;
+    }
+
+    .lightbox-image-wrapper img {
+      width: 100%;
+      height: auto;
+      max-height: 75vh;
+      object-fit: contain;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox-caption {
+      margin-top: 1.25rem;
+      color: var(--crema);
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+      font-family: 'Fraunces', serif;
+      letter-spacing: -0.01em;
+      opacity: 0.95;
+    }
+
+    .lightbox-counter {
+      margin-top: 0.35rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      border-radius: 50%;
+      color: var(--blanco);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .lightbox-close:hover {
+      background: var(--tierra);
+      transform: rotate(90deg);
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 56px;
+      height: 56px;
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      border-radius: 50%;
+      color: var(--blanco);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .lightbox-nav:hover {
+      background: var(--verde-claro);
+      color: var(--carbon);
+    }
+
+    .lightbox-prev {
+      left: 1.5rem;
+    }
+
+    .lightbox-next {
+      right: 1.5rem;
+    }
+
+    .lightbox-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blanco);
+      font-size: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .lightbox-image-wrapper.loading .lightbox-loading {
+      opacity: 1;
+    }
+
+    .lightbox-image-wrapper.loading img {
+      opacity: 0.2;
+    }
+
     /* ============ ANIMACIONES SCROLL ============ */
     .reveal {
       opacity: 0;
@@ -935,6 +1093,15 @@
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
       }
+
+      .lightbox-nav {
+        width: 48px;
+        height: 48px;
+        font-size: 1rem;
+      }
+
+      .lightbox-prev { left: 0.75rem; }
+      .lightbox-next { right: 0.75rem; }
     }
 
     @media (max-width: 768px) {
@@ -977,6 +1144,17 @@
 
       .hero {
         padding-top: 7rem;
+      }
+
+      .lightbox {
+        padding: 1rem;
+      }
+
+      .lightbox-close {
+        top: 0.75rem;
+        right: 0.75rem;
+        width: 40px;
+        height: 40px;
       }
     }
 
@@ -1051,9 +1229,11 @@
       </div>
       <div class="hero-visual">
         <div class="hero-image-wrapper">
-          <div class="hero-illustration">
-            <i class="fas fa-chalkboard-user"></i>
-          </div>
+          <img 
+            src="https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&q=80&auto=format&fit=crop" 
+            alt="Niños aprendiendo en la escuela comunitaria"
+            loading="lazy"
+          >
         </div>
         <div class="hero-badge badge-1">
           <div class="hero-badge-icon"><i class="fas fa-users"></i></div>
@@ -1157,27 +1337,8 @@
         <p>Un recorrido visual por las actividades, talleres y celebraciones que nos unen.</p>
       </div>
 
-      <div class="gallery-grid">
-        <div class="gallery-item large reveal">
-          <div class="gallery-placeholder"><i class="fas fa-users"></i></div>
-          <div class="gallery-caption">Jornada de puertas abiertas 2024</div>
-        </div>
-        <div class="gallery-item reveal">
-          <div class="gallery-placeholder"><i class="fas fa-paint-brush"></i></div>
-          <div class="gallery-caption">Taller de pintura</div>
-        </div>
-        <div class="gallery-item reveal">
-          <div class="gallery-placeholder"><i class="fas fa-music"></i></div>
-          <div class="gallery-caption">Festival de música</div>
-        </div>
-        <div class="gallery-item wide reveal">
-          <div class="gallery-placeholder"><i class="fas fa-seedling"></i></div>
-          <div class="gallery-caption">Huerta comunitaria</div>
-        </div>
-        <div class="gallery-item reveal">
-          <div class="gallery-placeholder"><i class="fas fa-book"></i></div>
-          <div class="gallery-caption">Club de lectura</div>
-        </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Los items se generan dinámicamente con JS para el lightbox -->
       </div>
     </div>
   </section>
@@ -1301,6 +1462,28 @@
     </div>
   </footer>
 
+  <!-- ============ LIGHTBOX ============ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de imágenes">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">
+      <i class="fas fa-times"></i>
+    </button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Anterior">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Siguiente">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <div class="lightbox-content">
+      <div class="lightbox-image-wrapper" id="lightboxImageWrapper">
+        <div class="lightbox-loading"><i class="fas fa-spinner fa-spin"></i></div>
+        <img id="lightboxImage" src="" alt="">
+      </div>
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+      <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+  </div>
+
   <script>
     // ============ NAVBAR SCROLL ============
     const navbar = document.getElementById('navbar');
@@ -1326,12 +1509,151 @@
       }
     });
 
-    // Cerrar menú al hacer clic en un enlace
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');
         menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
       });
+    });
+
+    // ============ GALERÍA CON IMÁGENES DE UNSPLASH ============
+    // Cada imagen tiene: src (miniatura), full (versión grande), caption y tamaño en grid
+    const galleryItems = [
+      {
+        src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80&auto=format&fit=crop',
+        full: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&q=90&auto=format&fit=crop',
+        caption: 'Jornada de puertas abiertas 2024',
+        size: 'large'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80&auto=format&fit=crop',
+        full: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1600&q=90&auto=format&fit=crop',
+        caption: 'Taller de pintura y arte',
+        size: ''
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80&auto=format&fit=crop',
+        full: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1600&q=90&auto=format&fit=crop',
+        caption: 'Festival de música comunitario',
+        size: ''
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=80&auto=format&fit=crop',
+        full: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=90&auto=format&fit=crop',
+        caption: 'Huerta comunitaria y agricultura urbana',
+        size: 'wide'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80&auto=format&fit=crop',
+        full: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=1600&q=90&auto=format&fit=crop',
+        caption: 'Club de lectura y biblioteca',
+        size: ''
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=600&q=80&auto=format&fit=crop',
+        full: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=1600&q=90&auto=format&fit=crop',
+        caption: 'Celebración del día del niño',
+        size: ''
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=900&q=80&auto=format&fit=crop',
+        full: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=1600&q=90&auto=format&fit=crop',
+        caption: 'Clase de alfabetización digital',
+        size: 'wide'
+      }
+    ];
+
+    const galleryGrid = document.getElementById('galleryGrid');
+
+    // Construir la galería dinámicamente
+    galleryItems.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.className = 'gallery-item reveal' + (item.size ? ' ' + item.size : '');
+      div.dataset.index = index;
+      div.innerHTML = `
+        <img src="${item.src}" alt="${item.caption}" loading="lazy">
+        <div class="gallery-zoom-icon"><i class="fas fa-expand"></i></div>
+        <div class="gallery-caption">${item.caption}</div>
+      `;
+      div.addEventListener('click', () => openLightbox(index));
+      galleryGrid.appendChild(div);
+    });
+
+    // ============ LIGHTBOX ============
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const lightboxImageWrapper = document.getElementById('lightboxImageWrapper');
+
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.add('active');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    }
+
+    function updateLightbox() {
+      const item = galleryItems[currentIndex];
+      
+      // Mostrar estado de carga
+      lightboxImageWrapper.classList.add('loading');
+      
+      // Cargar imagen
+      const img = new Image();
+      img.onload = () => {
+        lightboxImage.src = item.full;
+        lightboxImage.alt = item.caption;
+        lightboxImageWrapper.classList.remove('loading');
+      };
+      img.onerror = () => {
+        lightboxImage.src = item.src;
+        lightboxImageWrapper.classList.remove('loading');
+      };
+      img.src = item.full;
+
+      lightboxCaption.textContent = item.caption;
+      lightboxCounter.textContent = `${currentIndex + 1} / ${galleryItems.length}`;
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % galleryItems.length;
+      updateLightbox();
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+      updateLightbox();
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxNext.addEventListener('click', nextImage);
+    lightboxPrev.addEventListener('click', prevImage);
+
+    // Cerrar al hacer clic fuera de la imagen
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Navegación con teclado
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
     });
 
     // ============ CONTADORES ANIMADOS ============
@@ -1344,7 +1666,6 @@
       function update(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        // easeOutExpo
         const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
         const current = Math.floor(start + (target - start) * easeOut);
         element.textContent = prefix + current + suffix;
@@ -1358,7 +1679,7 @@
       requestAnimationFrame(update);
     }
 
-    // ============ INTERSECTION OBSERVER PARA REVEAL Y CONTADORES ============
+    // ============ INTERSECTION OBSERVER ============
     const revealElements = document.querySelectorAll('.reveal');
     const statNumbers = document.querySelectorAll('.stat-number');
 
@@ -1376,7 +1697,6 @@
 
     revealElements.forEach(el => observer.observe(el));
 
-    // Observer específico para contadores
     const counterObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
