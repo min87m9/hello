@@ -1,14 +1,736 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Hello!</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Estadísticas | Dashboard</title>
+  <!-- Fuentes y iconos -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f7fb;
+      color: #1e293b;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #0f172a 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header h1 i {
+      background: none;
+      -webkit-text-fill-color: #3b82f6;
+      margin-right: 0.5rem;
+    }
+
+    .badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge i {
+      font-size: 0.75rem;
+    }
+
+    /* Grid de métricas */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .metric-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      border: 1px solid #eef2f6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      border-color: #dbeafe;
+    }
+
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .metric-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .metric-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.125rem;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-trend {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .trend-up {
+      color: #10b981;
+    }
+
+    .trend-down {
+      color: #ef4444;
+    }
+
+    /* Sección de gráficos */
+    .charts-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .charts-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      border: 1px solid #eef2f6;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .chart-header h2 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .chart-header span {
+      font-size: 0.75rem;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+    }
+
+    /* Gráfico de barras personalizado con CSS */
+    .bar-chart {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      height: 200px;
+      gap: 0.5rem;
+      padding-top: 1rem;
+    }
+
+    .bar-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .bar {
+      width: 100%;
+      max-width: 40px;
+      background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 0.5rem 0.5rem 0.25rem 0.25rem;
+      transition: height 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      min-height: 4px;
+      height: 0; /* se anima con JS */
+    }
+
+    .bar-label {
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #64748b;
+      text-align: center;
+    }
+
+    /* Gráfico de líneas / área simple con SVG */
+    .line-chart-container {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .line-chart {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Tabla de datos */
+    .table-section {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      border: 1px solid #eef2f6;
+      margin-top: 1.5rem;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .table-header h2 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 0.75rem 0.5rem;
+      font-weight: 600;
+      color: #475569;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 0.875rem 0.5rem;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-completed {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-pending {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    .status-failed {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.875rem;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 1.5rem;
+    }
+
+    .footer i {
+      color: #3b82f6;
+      margin: 0 0.25rem;
+    }
+
+    /* Animaciones */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .metric-card, .chart-card, .table-section {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .metric-card:nth-child(1) { animation-delay: 0.05s; }
+    .metric-card:nth-child(2) { animation-delay: 0.1s; }
+    .metric-card:nth-child(3) { animation-delay: 0.15s; }
+    .metric-card:nth-child(4) { animation-delay: 0.2s; }
+    .chart-card:nth-child(1) { animation-delay: 0.25s; }
+    .chart-card:nth-child(2) { animation-delay: 0.3s; }
+    .table-section { animation-delay: 0.35s; }
+
+    /* Colores para iconos */
+    .icon-blue { background: #dbeafe; color: #2563eb; }
+    .icon-green { background: #dcfce7; color: #16a34a; }
+    .icon-purple { background: #ede9fe; color: #7c3aed; }
+    .icon-amber { background: #fef3c7; color: #d97706; }
+  </style>
 </head>
 <body>
-	<h1>Bienvenido a mi web!!</h1>
-	<h2>hello</h2>
-	Hola, mundo!
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1><i class="fas fa-chart-pie"></i> Reporte de Estadísticas</h1>
+      <div class="badge">
+        <i class="fas fa-calendar-alt"></i>
+        Última actualización: Hoy, 14:30 PM
+      </div>
+    </div>
+
+    <!-- Métricas principales -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Visitas totales</span>
+          <div class="metric-icon icon-blue"><i class="fas fa-eye"></i></div>
+        </div>
+        <div class="metric-value" id="visitsValue">0</div>
+        <div class="metric-trend trend-up">
+          <i class="fas fa-arrow-up"></i> +12.5% vs mes anterior
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Usuarios activos</span>
+          <div class="metric-icon icon-green"><i class="fas fa-users"></i></div>
+        </div>
+        <div class="metric-value" id="usersValue">0</div>
+        <div class="metric-trend trend-up">
+          <i class="fas fa-arrow-up"></i> +8.2% vs mes anterior
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Tasa de conversión</span>
+          <div class="metric-icon icon-purple"><i class="fas fa-percent"></i></div>
+        </div>
+        <div class="metric-value" id="conversionValue">0</div>
+        <div class="metric-trend trend-down">
+          <i class="fas fa-arrow-down"></i> -1.8% vs mes anterior
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Ingresos</span>
+          <div class="metric-icon icon-amber"><i class="fas fa-dollar-sign"></i></div>
+        </div>
+        <div class="metric-value" id="revenueValue">0</div>
+        <div class="metric-trend trend-up">
+          <i class="fas fa-arrow-up"></i> +15.3% vs mes anterior
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de gráficos -->
+    <div class="charts-section">
+      <!-- Gráfico de barras -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h2>Visitas por mes</h2>
+          <span>2024</span>
+        </div>
+        <div class="bar-chart" id="barChart">
+          <!-- Las barras se generan con JS -->
+        </div>
+      </div>
+
+      <!-- Gráfico de líneas (SVG) -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h2>Crecimiento de usuarios</h2>
+          <span>Últimos 6 meses</span>
+        </div>
+        <div class="line-chart-container">
+          <svg class="line-chart" viewBox="0 0 500 200" preserveAspectRatio="none">
+            <!-- Área bajo la línea -->
+            <defs>
+              <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#3b82f6; stop-opacity:0.25" />
+                <stop offset="100%" style="stop-color:#3b82f6; stop-opacity:0" />
+              </linearGradient>
+            </defs>
+            <!-- Línea y área (se animan con JS) -->
+            <path id="areaPath" d="" fill="url(#areaGradient)" stroke="none" />
+            <path id="linePath" d="" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <!-- Puntos -->
+            <g id="dotsGroup"></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de datos -->
+    <div class="table-section">
+      <div class="table-header">
+        <h2>Últimos informes generados</h2>
+        <span class="badge" style="background:#f1f5f9; color:#475569;">
+          <i class="fas fa-file-alt"></i> 4 reportes
+        </span>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre del reporte</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Registros</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#001</td>
+              <td>Ventas trimestrales Q1</td>
+              <td>10/04/2024</td>
+              <td><span class="status status-completed">Completado</span></td>
+              <td>1,245</td>
+            </tr>
+            <tr>
+              <td>#002</td>
+              <td>Análisis de tráfico web</td>
+              <td>08/04/2024</td>
+              <td><span class="status status-completed">Completado</span></td>
+              <td>8,932</td>
+            </tr>
+            <tr>
+              <td>#003</td>
+              <td>Encuesta de satisfacción</td>
+              <td>05/04/2024</td>
+              <td><span class="status status-pending">Pendiente</span></td>
+              <td>432</td>
+            </tr>
+            <tr>
+              <td>#004</td>
+              <td>Rendimiento de campaña</td>
+              <td>02/04/2024</td>
+              <td><span class="status status-failed">Fallido</span></td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p><i class="fas fa-chart-line"></i> Reporte generado automáticamente · Datos actualizados cada 24 horas</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ---------- 1. Animación de contadores en métricas ----------
+      const counters = [
+        { id: 'visitsValue', target: 28450, suffix: '', prefix: '', decimals: 0 },
+        { id: 'usersValue', target: 12480, suffix: '', prefix: '', decimals: 0 },
+        { id: 'conversionValue', target: 3.8, suffix: '%', prefix: '', decimals: 1 },
+        { id: 'revenueValue', target: 89250, suffix: '', prefix: '$', decimals: 0 }
+      ];
+
+      function animateValue(el, start, end, duration, decimals = 0, prefix = '', suffix = '') {
+        const range = end - start;
+        const startTime = performance.now();
+        
+        function update(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // easeOutQuart
+          const easeOut = 1 - Math.pow(1 - progress, 4);
+          const current = start + range * easeOut;
+          
+          let formatted;
+          if (decimals > 0) {
+            formatted = current.toFixed(decimals);
+          } else {
+            formatted = Math.floor(current).toLocaleString('en-US');
+          }
+          
+          el.textContent = prefix + formatted + suffix;
+          
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          } else {
+            // valor final exacto
+            if (decimals > 0) {
+              el.textContent = prefix + end.toFixed(decimals) + suffix;
+            } else {
+              el.textContent = prefix + end.toLocaleString('en-US') + suffix;
+            }
+          }
+        }
+        
+        requestAnimationFrame(update);
+      }
+
+      // Iniciar contadores después de un pequeño delay
+      setTimeout(() => {
+        counters.forEach(c => {
+          const el = document.getElementById(c.id);
+          if (el) {
+            animateValue(el, 0, c.target, 1200, c.decimals, c.prefix, c.suffix);
+          }
+        });
+      }, 300);
+
+      // ---------- 2. Gráfico de barras ----------
+      const monthlyData = [
+        { label: 'Ene', value: 4200 },
+        { label: 'Feb', value: 3800 },
+        { label: 'Mar', value: 5100 },
+        { label: 'Abr', value: 6200 },
+        { label: 'May', value: 5800 },
+        { label: 'Jun', value: 7300 },
+        { label: 'Jul', value: 8100 }
+      ];
+
+      const maxValue = Math.max(...monthlyData.map(d => d.value));
+      const barChart = document.getElementById('barChart');
+
+      // Limpiar y construir barras
+      barChart.innerHTML = '';
+      monthlyData.forEach((item, index) => {
+        const barItem = document.createElement('div');
+        barItem.className = 'bar-item';
+
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        // Altura inicial 0 para animar
+        bar.style.height = '0%';
+        // Guardamos el valor objetivo en un atributo
+        bar.dataset.targetHeight = (item.value / maxValue * 100).toFixed(1) + '%';
+
+        const label = document.createElement('span');
+        label.className = 'bar-label';
+        label.textContent = item.label;
+
+        barItem.appendChild(bar);
+        barItem.appendChild(label);
+        barChart.appendChild(barItem);
+      });
+
+      // Animar barras después de que el DOM esté listo
+      setTimeout(() => {
+        document.querySelectorAll('.bar').forEach(bar => {
+          const targetHeight = bar.dataset.targetHeight;
+          bar.style.height = targetHeight;
+        });
+      }, 400);
+
+      // ---------- 3. Gráfico de líneas SVG ----------
+      const userGrowthData = [
+        { month: 'Ene', value: 8200 },
+        { month: 'Feb', value: 8900 },
+        { month: 'Mar', value: 9800 },
+        { month: 'Abr', value: 10500 },
+        { month: 'May', value: 11800 },
+        { month: 'Jun', value: 12480 }
+      ];
+
+      const svgWidth = 500;
+      const svgHeight = 200;
+      const padding = { top: 20, right: 20, bottom: 30, left: 40 };
+      const chartWidth = svgWidth - padding.left - padding.right;
+      const chartHeight = svgHeight - padding.top - padding.bottom;
+
+      const maxUser = Math.max(...userGrowthData.map(d => d.value)) * 1.1;
+      const minUser = Math.min(...userGrowthData.map(d => d.value)) * 0.9;
+
+      // Calcular puntos
+      const points = userGrowthData.map((d, i) => {
+        const x = padding.left + (i / (userGrowthData.length - 1)) * chartWidth;
+        const y = padding.top + chartHeight - ((d.value - minUser) / (maxUser - minUser)) * chartHeight;
+        return { x, y, value: d.value, month: d.month };
+      });
+
+      // Construir path de línea
+      let linePathD = `M ${points[0].x} ${points[0].y}`;
+      for (let i = 1; i < points.length; i++) {
+        linePathD += ` L ${points[i].x} ${points[i].y}`;
+      }
+
+      // Área: línea + bajar hasta el fondo y cerrar
+      const areaPathD = linePathD + 
+        ` L ${points[points.length - 1].x} ${padding.top + chartHeight} L ${points[0].x} ${padding.top + chartHeight} Z`;
+
+      const linePath = document.getElementById('linePath');
+      const areaPath = document.getElementById('areaPath');
+      
+      // Inicialmente vacíos para animar (usamos stroke-dasharray para línea)
+      linePath.setAttribute('d', linePathD);
+      areaPath.setAttribute('d', areaPathD);
+
+      // Animación de trazo para la línea
+      const totalLength = linePath.getTotalLength();
+      linePath.style.strokeDasharray = totalLength;
+      linePath.style.strokeDashoffset = totalLength;
+      
+      // Forzar reflow
+      linePath.getBoundingClientRect();
+      
+      // Animar después de un timeout
+      setTimeout(() => {
+        linePath.style.transition = 'stroke-dashoffset 1.2s ease-in-out';
+        linePath.style.strokeDashoffset = '0';
+      }, 500);
+
+      // Área fade in
+      areaPath.style.opacity = '0';
+      setTimeout(() => {
+        areaPath.style.transition = 'opacity 1s ease-in-out';
+        areaPath.style.opacity = '1';
+      }, 600);
+
+      // Añadir puntos (círculos)
+      const dotsGroup = document.getElementById('dotsGroup');
+      dotsGroup.innerHTML = '';
+      points.forEach((p, i) => {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', p.x);
+        circle.setAttribute('cy', p.y);
+        circle.setAttribute('r', '5');
+        circle.setAttribute('fill', '#2563eb');
+        circle.setAttribute('stroke', 'white');
+        circle.setAttribute('stroke-width', '2');
+        circle.style.opacity = '0';
+        circle.style.transition = 'opacity 0.4s ease';
+        dotsGroup.appendChild(circle);
+
+        // Tooltip simple (title)
+        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+        title.textContent = `${p.month}: ${p.value.toLocaleString()} usuarios`;
+        circle.appendChild(title);
+
+        // Aparecer secuencialmente
+        setTimeout(() => {
+          circle.style.opacity = '1';
+        }, 800 + i * 100);
+      });
+
+      // Añadir etiquetas de meses en el eje X (opcional, pero se ve bien)
+      const labelsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      points.forEach((p) => {
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', p.x);
+        text.setAttribute('y', svgHeight - 8);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('font-size', '10');
+        text.setAttribute('fill', '#64748b');
+        text.setAttribute('font-family', 'Inter, sans-serif');
+        text.textContent = p.month;
+        labelsGroup.appendChild(text);
+      });
+      // Insertar labels antes de los dots? no importa, se superponen bien
+      document.querySelector('.line-chart').appendChild(labelsGroup);
+
+      // Pequeña línea base (eje X)
+      const axisLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      axisLine.setAttribute('x1', padding.left);
+      axisLine.setAttribute('y1', padding.top + chartHeight);
+      axisLine.setAttribute('x2', svgWidth - padding.right);
+      axisLine.setAttribute('y2', padding.top + chartHeight);
+      axisLine.setAttribute('stroke', '#e2e8f0');
+      axisLine.setAttribute('stroke-width', '1');
+      document.querySelector('.line-chart').appendChild(axisLine);
+
+    })();
+  </script>
 </body>
 </html>
