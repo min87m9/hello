@@ -81,6 +81,8 @@
       color: var(--verde);
       text-decoration: none;
       letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1100;
     }
 
     .logo-icon {
@@ -100,67 +102,339 @@
       transform: rotate(45deg);
     }
 
-    .nav-links {
+    /* ============ BOTÓN HAMBURGUESA ============ */
+    .menu-toggle {
+      position: relative;
+      z-index: 1100;
+      width: 52px;
+      height: 52px;
+      background: var(--verde);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
       display: flex;
-      gap: 2rem;
-      list-style: none;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 6px 16px rgba(45, 106, 79, 0.25);
     }
 
-    .nav-links a {
+    .menu-toggle:hover {
+      background: var(--tierra);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(188, 108, 37, 0.3);
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 2.5px;
+      background: var(--crema);
+      border-radius: 2px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center;
+    }
+
+    /* Estado activo: transformar a X */
+    .menu-toggle.active {
+      background: var(--tierra);
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* ============ OVERLAY ============ */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 15, 12, 0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 1050;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ============ MENÚ LATERAL DERECHO ============ */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 380px;
+      max-width: 90vw;
+      height: 100vh;
+      background: var(--crema);
+      z-index: 1080;
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+    }
+
+    .side-menu.active {
+      transform: translateX(0);
+    }
+
+    .side-menu-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(45, 106, 79, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .side-menu-header .logo {
+      font-size: 1.2rem;
+    }
+
+    .side-menu-header .logo-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 0.95rem;
+    }
+
+    .side-menu-close {
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: 1px solid rgba(45, 106, 79, 0.15);
+      border-radius: 12px;
+      color: var(--verde);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .side-menu-close:hover {
+      background: var(--verde);
+      color: var(--crema);
+      border-color: var(--verde);
+      transform: rotate(90deg);
+    }
+
+    .side-menu-nav {
+      padding: 2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gris);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .side-menu-links {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .side-menu-links li {
+      margin-bottom: 0.35rem;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .side-menu.active .side-menu-links li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Delay escalonado */
+    .side-menu.active .side-menu-links li:nth-child(1) { transition-delay: 0.15s; }
+    .side-menu.active .side-menu-links li:nth-child(2) { transition-delay: 0.2s; }
+    .side-menu.active .side-menu-links li:nth-child(3) { transition-delay: 0.25s; }
+    .side-menu.active .side-menu-links li:nth-child(4) { transition-delay: 0.3s; }
+
+    .side-menu-links a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-radius: 14px;
       text-decoration: none;
       color: var(--carbon);
       font-weight: 500;
-      font-size: 0.95rem;
-      position: relative;
-      transition: color 0.3s;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
     }
 
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--tierra);
-      transition: width 0.3s ease;
+    .side-menu-links a:hover {
+      background: var(--verde-suave);
+      color: var(--verde);
+      border-color: rgba(45, 106, 79, 0.1);
+      transform: translateX(-4px);
+      padding-left: 1.5rem;
     }
 
-    .nav-links a:hover {
-      color: var(--tierra);
+    .side-menu-links a .link-arrow {
+      color: var(--gris);
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      opacity: 0.4;
     }
 
-    .nav-links a:hover::after {
-      width: 100%;
+    .side-menu-links a:hover .link-arrow {
+      color: var(--verde);
+      opacity: 1;
+      transform: translateX(4px);
     }
 
-    .btn-nav {
-      background: var(--verde);
-      color: var(--crema) !important;
-      padding: 0.6rem 1.4rem;
-      border-radius: 999px;
-      font-weight: 600 !important;
+    .side-menu-links a .link-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--verde-suave);
+      color: var(--verde);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      margin-right: 1rem;
       transition: all 0.3s ease;
     }
 
-    .btn-nav:hover {
-      background: var(--tierra);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(188, 108, 37, 0.25);
+    .side-menu-links a:hover .link-icon {
+      background: var(--verde);
+      color: var(--crema);
     }
 
-    .btn-nav::after {
-      display: none;
+    .side-menu-links a .link-content {
+      display: flex;
+      align-items: center;
+      flex: 1;
     }
 
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
+    /* Botón CTA del menú */
+    .side-menu-cta {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.4s ease 0.35s, transform 0.4s ease 0.35s;
+      margin-bottom: 2rem;
+    }
+
+    .side-menu.active .side-menu-cta {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .side-menu-cta .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 1.1rem 1.75rem;
+      font-size: 1rem;
+    }
+
+    /* Info de contacto dentro del menú */
+    .side-menu-info {
+      margin-top: auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(45, 106, 79, 0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease 0.4s, transform 0.4s ease 0.4s;
+    }
+
+    .side-menu.active .side-menu-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .side-menu-info h4 {
+      font-family: 'Fraunces', serif;
+      font-size: 0.95rem;
       color: var(--verde);
-      cursor: pointer;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .side-menu-info-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .side-menu-info-contact a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--gris);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .side-menu-info-contact a:hover {
+      color: var(--verde);
+    }
+
+    .side-menu-info-contact i {
+      width: 32px;
+      height: 32px;
+      background: var(--verde-suave);
+      color: var(--verde);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .side-menu-social {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .side-menu-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--verde-suave);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--verde);
+      text-decoration: none;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .side-menu-social a:hover {
+      background: var(--verde);
+      color: var(--crema);
+      transform: translateY(-3px);
     }
 
     /* ============ HERO ============ */
@@ -560,12 +834,11 @@
       color: var(--verde);
     }
 
-    /* ============ GALERÍA POR CATEGORÍAS ============ */
+    /* ============ GALERÍA ============ */
     .gallery {
       background: var(--blanco);
     }
 
-    /* Tabs de categorías */
     .category-tabs {
       display: flex;
       justify-content: center;
@@ -615,7 +888,6 @@
       color: var(--verde);
     }
 
-    /* Sección de categoría */
     .category-section {
       display: none;
       animation: fadeInCategory 0.5s ease;
@@ -626,14 +898,8 @@
     }
 
     @keyframes fadeInCategory {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .category-heading {
@@ -673,7 +939,6 @@
     .cat-talleres .category-heading-icon { background: #fef3c7; color: var(--tierra); }
     .cat-celebraciones .category-heading-icon { background: #fce7f3; color: #db2777; }
 
-    /* Grid de la galería (3 columnas por categoría) */
     .category-gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1169,15 +1434,9 @@
       color: var(--carbon);
     }
 
-    .lightbox-prev {
-      left: 1.5rem;
-    }
+    .lightbox-prev { left: 1.5rem; }
+    .lightbox-next { right: 1.5rem; }
 
-    .lightbox-next {
-      right: 1.5rem;
-    }
-
-    /* Indicador de progreso */
     .lightbox-progress {
       position: absolute;
       bottom: 1.5rem;
@@ -1269,29 +1528,6 @@
     }
 
     @media (max-width: 768px) {
-      .nav-links {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: var(--crema);
-        flex-direction: column;
-        padding: 2rem;
-        gap: 1.5rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        transform: translateY(-150%);
-        transition: transform 0.4s ease;
-        align-items: flex-start;
-      }
-
-      .nav-links.open {
-        transform: translateY(0);
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
       .category-gallery {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -1313,6 +1549,11 @@
 
       .lightbox-progress {
         bottom: 0.75rem;
+      }
+
+      .side-menu {
+        width: 100%;
+        max-width: 100%;
       }
     }
 
@@ -1352,6 +1593,12 @@
         padding: 0.6rem 1.1rem;
         font-size: 0.8rem;
       }
+
+      .menu-toggle {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+      }
     }
   </style>
 </head>
@@ -1364,17 +1611,94 @@
         <span class="logo-icon"><i class="fas fa-seedling"></i></span>
         Semillas
       </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#programas">Programas</a></li>
-        <li><a href="#galeria">Galería</a></li>
-        <li><a href="#testimonios">Testimonios</a></li>
-        <li><a href="#contacto" class="btn-nav">Inscríbete</a></li>
-      </ul>
-      <button class="menu-toggle" id="menuToggle" aria-label="Menú">
-        <i class="fas fa-bars"></i>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
   </nav>
+
+  <!-- ============ OVERLAY ============ -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- ============ MENÚ LATERAL DERECHO ============ -->
+  <aside class="side-menu" id="sideMenu" aria-hidden="true">
+    <div class="side-menu-header">
+      <a href="#" class="logo" id="sideMenuLogo">
+        <span class="logo-icon"><i class="fas fa-seedling"></i></span>
+        Semillas
+      </a>
+      <button class="side-menu-close" id="sideMenuClose" aria-label="Cerrar menú">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="side-menu-nav">
+      <div class="side-menu-label">Navegación</div>
+      <ul class="side-menu-links">
+        <li>
+          <a href="#programas">
+            <span class="link-content">
+              <span class="link-icon"><i class="fas fa-book-open"></i></span>
+              Programas
+            </span>
+            <i class="fas fa-arrow-right link-arrow"></i>
+          </a>
+        </li>
+        <li>
+          <a href="#galeria">
+            <span class="link-content">
+              <span class="link-icon"><i class="fas fa-images"></i></span>
+              Galería
+            </span>
+            <i class="fas fa-arrow-right link-arrow"></i>
+          </a>
+        </li>
+        <li>
+          <a href="#testimonios">
+            <span class="link-content">
+              <span class="link-icon"><i class="fas fa-quote-left"></i></span>
+              Testimonios
+            </span>
+            <i class="fas fa-arrow-right link-arrow"></i>
+          </a>
+        </li>
+        <li>
+          <a href="#contacto">
+            <span class="link-content">
+              <span class="link-icon"><i class="fas fa-envelope"></i></span>
+              Contacto
+            </span>
+            <i class="fas fa-arrow-right link-arrow"></i>
+          </a>
+        </li>
+      </ul>
+
+      <div class="side-menu-cta">
+        <a href="#contacto" class="btn btn-primary">
+          <i class="fas fa-user-plus"></i> Inscríbete ahora
+        </a>
+      </div>
+
+      <div class="side-menu-info">
+        <h4>Contacto</h4>
+        <div class="side-menu-info-contact">
+          <a href="#"><i class="fas fa-map-marker-alt"></i> Calle 45 #12-30, Barrio El Prado</a>
+          <a href="tel:+573001234567"><i class="fas fa-phone"></i> +57 300 123 4567</a>
+          <a href="mailto:hola@escuelasemillas.org"><i class="fas fa-envelope"></i> hola@escuelasemillas.org</a>
+        </div>
+
+        <h4>Síguenos</h4>
+        <div class="side-menu-social">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+  </aside>
 
   <!-- ============ HERO ============ -->
   <section class="hero">
@@ -1495,7 +1819,7 @@
     </div>
   </section>
 
-  <!-- ============ GALERÍA POR CATEGORÍAS ============ -->
+  <!-- ============ GALERÍA ============ -->
   <section class="gallery" id="galeria">
     <div class="section-container">
       <div class="section-header reveal">
@@ -1504,7 +1828,6 @@
         <p>Explora por categorías: actividades, talleres y celebraciones que dan vida a nuestra escuela.</p>
       </div>
 
-      <!-- Tabs de categorías -->
       <div class="category-tabs" id="categoryTabs">
         <button class="category-tab active" data-category="actividades">
           <i class="fas fa-users"></i> Actividades
@@ -1520,10 +1843,7 @@
         </button>
       </div>
 
-      <!-- Contenedor de secciones por categoría -->
-      <div id="categorySections">
-        <!-- Se generan dinámicamente con JS -->
-      </div>
+      <div id="categorySections"></div>
     </div>
   </section>
 
@@ -1684,28 +2004,65 @@
       }
     });
 
-    // ============ MENÚ MÓVIL ============
+    // ============ MENÚ LATERAL ============
     const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const sideMenuClose = document.getElementById('sideMenuClose');
+    const sideMenuLogo = document.getElementById('sideMenuLogo');
 
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      const icon = menuToggle.querySelector('i');
-      if (navLinks.classList.contains('open')) {
-        icon.classList.replace('fa-bars', 'fa-times');
+    function openMenu() {
+      menuToggle.classList.add('active');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      sideMenu.classList.add('active');
+      sideMenu.setAttribute('aria-hidden', 'false');
+      menuOverlay.classList.add('active');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeMenu() {
+      menuToggle.classList.remove('active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      sideMenu.classList.remove('active');
+      sideMenu.setAttribute('aria-hidden', 'true');
+      menuOverlay.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    }
+
+    function toggleMenu() {
+      if (sideMenu.classList.contains('active')) {
+        closeMenu();
       } else {
-        icon.classList.replace('fa-times', 'fa-bars');
+        openMenu();
+      }
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+    sideMenuClose.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+
+    // Cerrar menú con tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sideMenu.classList.contains('active')) {
+        closeMenu();
       }
     });
 
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    // Cerrar menú al hacer clic en un enlace interno
+    sideMenu.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+        closeMenu();
       });
     });
 
-    // ============ DATOS DE LA GALERÍA POR CATEGORÍAS ============
+    // Cerrar menú al hacer clic en el logo del menú
+    sideMenuLogo.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeMenu();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ============ DATOS DE LA GALERÍA ============
     const galleryData = {
       actividades: {
         title: 'Actividades',
@@ -1823,25 +2180,19 @@
       }
     };
 
-    // ============ CONSTRUIR LA GALERÍA ============
+    // ============ CONSTRUIR GALERÍA ============
     const categorySections = document.getElementById('categorySections');
     const categoryOrder = ['actividades', 'talleres', 'celebraciones'];
-
-    // Estructura plana para el lightbox: [{categoryKey, itemIndex, ...item}]
     const flatItems = [];
 
     categoryOrder.forEach(catKey => {
       const cat = galleryData[catKey];
-
-      // Actualizar contador de la tab
       document.getElementById(`count-${catKey}`).textContent = cat.items.length;
 
-      // Crear sección
       const section = document.createElement('div');
       section.className = `category-section ${catKey === 'actividades' ? 'active' : ''}`;
       section.dataset.category = catKey;
 
-      // Heading
       const heading = document.createElement('div');
       heading.className = `category-heading ${cat.cssClass}`;
       heading.innerHTML = `
@@ -1853,11 +2204,10 @@
       `;
       section.appendChild(heading);
 
-      // Grid
       const grid = document.createElement('div');
       grid.className = 'category-gallery';
 
-      cat.items.forEach((item, idx) => {
+      cat.items.forEach((item) => {
         const globalIndex = flatItems.length;
         flatItems.push({
           categoryKey: catKey,
@@ -1882,23 +2232,15 @@
       categorySections.appendChild(section);
     });
 
-    // ============ TABS DE CATEGORÍA ============
+    // ============ TABS CATEGORÍA ============
     const tabs = document.querySelectorAll('.category-tab');
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const targetCat = tab.dataset.category;
-
-        // Activar tab
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
-        // Mostrar sección correspondiente
         document.querySelectorAll('.category-section').forEach(sec => {
-          if (sec.dataset.category === targetCat) {
-            sec.classList.add('active');
-          } else {
-            sec.classList.remove('active');
-          }
+          sec.classList.toggle('active', sec.dataset.category === targetCat);
         });
       });
     });
@@ -1917,7 +2259,6 @@
 
     let currentIndex = 0;
 
-    // Construir indicadores de progreso
     flatItems.forEach((_, i) => {
       const dot = document.createElement('button');
       dot.className = 'lightbox-progress-dot';
@@ -1945,11 +2286,8 @@
 
     function updateLightbox() {
       const item = flatItems[currentIndex];
-
-      // Estado de carga
       lightboxImageWrapper.classList.add('loading');
 
-      // Cargar imagen grande
       const img = new Image();
       img.onload = () => {
         lightboxImage.src = item.full;
@@ -1962,15 +2300,11 @@
       };
       img.src = item.full;
 
-      // Actualizar textos
       lightboxCaption.textContent = item.caption;
       lightboxCounter.textContent = `${currentIndex + 1} / ${flatItems.length}`;
-
-      // Categoría con clase e icono
       lightboxCategory.className = `lightbox-category ${item.categoryCss}`;
       lightboxCategory.innerHTML = `<i class="fas ${item.categoryIcon}"></i> ${item.categoryTitle}`;
 
-      // Actualizar indicadores
       progressDots.forEach((dot, i) => {
         dot.classList.toggle('active', i === currentIndex);
       });
@@ -1990,12 +2324,10 @@
     lightboxNext.addEventListener('click', nextImage);
     lightboxPrev.addEventListener('click', prevImage);
 
-    // Cerrar al hacer clic fuera
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) closeLightbox();
     });
 
-    // Teclado
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('active')) return;
       if (e.key === 'Escape') closeLightbox();
@@ -2003,7 +2335,7 @@
       if (e.key === 'ArrowLeft') prevImage();
     });
 
-    // ============ CONTADORES ANIMADOS ============
+    // ============ CONTADORES ============
     function animateCounter(element, target, duration = 2000) {
       const start = 0;
       const startTime = performance.now();
@@ -2035,10 +2367,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
-    });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
     revealElements.forEach(el => observer.observe(el));
 
